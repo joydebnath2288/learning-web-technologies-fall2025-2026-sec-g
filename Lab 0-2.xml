@@ -1,0 +1,34 @@
+<records>
+
+    <record>
+
+     <id>23</id>
+     <name>John Carter</name>
+     <admisson_date>25/12/2015</admisson_date>
+
+    </record>
+
+    <record>
+
+     <id>29</id>
+     <name>Bob Marshal</name>
+     <admisson_date>25/01/2015</admisson_date>
+
+    </record>
+
+    <record>
+
+     <id>35</id>
+     <name>Clark Kent</name>
+     <admisson_date>17/06/2005</admisson_date>
+
+    </record>
+
+
+</records>
+
+
+
+
+
+

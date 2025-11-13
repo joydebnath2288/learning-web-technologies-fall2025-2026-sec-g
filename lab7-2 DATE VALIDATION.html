@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form 4 - Date Validation</title>
+</head>
+<body>
+<h3>4. Date Validation</h3>
+
+<form onsubmit="return checkDate()">
+  Day: <input type="text" id="dd" size="3" onblur="checkDate()">
+  Month: <input type="text" id="mm" size="3" onblur="checkDate()">
+  Year: <input type="text" id="yy" size="5" onblur="checkDate()"><br>
+  <span id="err" style="color:red"></span><br>
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+function checkDate(){
+  var d=parseInt(document.getElementById('dd').value,10);
+  var m=parseInt(document.getElementById('mm').value,10);
+  var y=parseInt(document.getElementById('yy').value,10);
+  var e=document.getElementById('err');
+  if(isNaN(d)||isNaN(m)||isNaN(y)){ e.textContent='All fields required'; return false; }
+  if(d<1||d>31||m<1||m>12||y<1900||y>2016){ e.textContent='Invalid date'; return false; }
+  e.textContent=''; return true;
+}
+</script>
+</body>
+</html>

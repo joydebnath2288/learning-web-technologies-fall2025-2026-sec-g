@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lab 7.2 - Simple Form Validation</title>
+</head>
+<body>
+  <h1>Simple Form Validation (Basic)</h1>
+
+  <!-- 1. Name (cannot be empty, at least 2 words, start with letter, allow letters . - ) -->
+  <form id="f1" onsubmit="return checkF1()">
+    <h3>1. Name</h3>
+    <input id="name" onblur="checkName()" type="text" placeholder="Full name"><br>
+    <span id="errName" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 2. Email -->
+  <form id="f2" onsubmit="return checkF2()">
+    <h3>2. Email</h3>
+    <input id="email" onblur="checkEmail()" type="text" placeholder="you@example.com"><br>
+    <span id="errEmail" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 3. Radio (at least one) -->
+  <form id="f3" onsubmit="return checkF3()">
+    <h3>3. Gender</h3>
+    <label><input name="gender" type="radio" value="M"> Male</label>
+    <label><input name="gender" type="radio" value="F"> Female</label><br>
+    <span id="errGender" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 4. Date (dd mm yyyy) -->
+  <form id="f4" onsubmit="return checkF4()">
+    <h3>4. Date</h3>
+    Day: <input id="dd" onblur="checkDate()" type="text" size="3"> 
+    Month: <input id="mm" onblur="checkDate()" type="text" size="3">
+    Year: <input id="yy" onblur="checkDate()" type="text" size="5"><br>
+    <span id="errDate" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 5. Checkbox (at least one) -->
+  <form id="f5" onsubmit="return checkF5()">
+    <h3>5. Hobbies</h3>
+    <label><input name="hobby" type="checkbox" value="r"> Reading</label>
+    <label><input name="hobby" type="checkbox" value="s"> Sports</label>
+    <label><input name="hobby" type="checkbox" value="m"> Music</label><br>
+    <span id="errHobby" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 6. Select (must choose) -->
+  <form id="f6" onsubmit="return checkF6()">
+    <h3>6. Country</h3>
+    <select id="country" onblur="checkCountry()">
+      <option value="">--Select--</option>
+      <option value="bd">Bangladesh</option>
+      <option value="in">India</option>
+      <option value="us">USA</option>
+    </select><br>
+    <span id="errCountry" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 7. UserId (positive) and picture (non-empty) -->
+  <form id="f7" onsubmit="return checkF7()">
+    <h3>7. User ID & Picture</h3>
+    User ID: <input id="uid" onblur="checkUid()" type="number"><br>
+    <span id="errUid" style="color:red"></span><br>
+    Picture: <input id="pic" onblur="checkPic()" type="file"><br>
+    <span id="errPic" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+  <hr>
+
+  <!-- 8. Assignment (name,email,userid combined) -->
+  <form id="f8" onsubmit="return checkF8()">
+    <h3>8. Assignment (combined)</h3>
+    Name: <input id="aName" onblur="checkAName()" type="text"><br>
+    <span id="aErrName" style="color:red"></span><br>
+    Email: <input id="aEmail" onblur="checkAEmail()" type="text"><br>
+    <span id="aErrEmail" style="color:red"></span><br>
+    User ID: <input id="aUid" onblur="checkAUid()" type="number"><br>
+    <span id="aErrUid" style="color:red"></span><br>
+    <input type="submit" value="Submit">
+  </form>
+
+
+<script>
+/* --- 1. Name --- */
+function checkName(){
+  var v = document.getElementById('name').value.trim();
+  var e = document.getElementById('errName');
+  if(v === '') { e.textContent = 'Name cannot be empty'; return false; }
+  if(!/^[A-Za-z]/.test(v)) { e.textContent = 'Must start with a letter'; return false; }
+  if(v.split(/\s+/).length < 2) { e.textContent = 'Enter at least two words'; return false; }
+  if(!/^[A-Za-z.\-\s]+$/.test(v)) { e.textContent = 'Only letters, dot, dash allowed'; return false; }
+  e.textContent = ''; return true;
+}
+function checkF1(){ return checkName(); }
+
+/* --- 2. Email --- */
+function checkEmail(){
+  var v = document.getElementById('email').value.trim();
+  var e = document.getElementById('errEmail');
+  if(v === '') { e.textContent = 'Email cannot be empty'; return false; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { e.textContent = 'Invalid email'; return false; }
+  e.textContent=''; return true;
+}
+function checkF2(){ return checkEmail(); }
+
+/* --- 3. Gender --- */
+function checkF3(){
+  var g = document.querySelector('input[name="gender"]:checked');
+  var e = document.getElementById('errGender');
+  if(!g) { e.textContent = 'Select one'; return false; }
+  e.textContent=''; return true;
+}
+
+/* --- 4. Date --- */
+function checkDate(){
+  var d = parseInt(document.getElementById('dd').value,10);
+  var m = parseInt(document.getElementById('mm').value,10);
+  var y = parseInt(document.getElementById('yy').value,10);
+  var e = document.getElementById('errDate');
+  if(isNaN(d) || isNaN(m) || isNaN(y)) { e.textContent = 'All parts required'; return false; }
+  if(d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2016) { e.textContent = 'Date out of range'; return false; }
+  e.textContent=''; return true;
+}
+function checkF4(){ return checkDate(); }
+
+/* --- 5. Hobbies --- */
+function checkF5(){
+  var c = document.querySelectorAll('input[name="hobby"]:checked');
+  var e = document.getElementById('errHobby');
+  if(c.length === 0) { e.textContent = 'Select at least one'; return false; }
+  e.textContent=''; return true;
+}
+
+/* --- 6. Country --- */
+function checkCountry(){
+  var v = document.getElementById('country').value;
+  var e = document.getElementById('errCountry');
+  if(v === '') { e.textContent = 'Choose country'; return false; }
+  e.textContent=''; return true;
+}
+function checkF6(){ return checkCountry(); }
+
+/* --- 7. UID & Picture --- */
+function checkUid(){
+  var v = document.getElementById('uid').value;
+  var e = document.getElementById('errUid');
+  if(v === '' || Number(v) <= 0) { e.textContent = 'Enter positive ID'; return false; }
+  e.textContent=''; return true;
+}
+function checkPic(){
+  var v = document.getElementById('pic').value;
+  var e = document.getElementById('errPic');
+  if(v === '') { e.textContent = 'Upload picture'; return false; }
+  e.textContent=''; return true;
+}
+function checkF7(){ return checkUid() & checkPic(); }
+
+/* --- 8. Assignment combined --- */
+function checkAName(){
+  var v = document.getElementById('aName').value.trim();
+  var e = document.getElementById('aErrName');
+  if(v === '') { e.textContent = 'Name required'; return false; }
+  if(v.split(/\s+/).length < 2) { e.textContent = 'At least two words'; return false; }
+  e.textContent=''; return true;
+}
+function checkAEmail(){
+  var v = document.getElementById('aEmail').value.trim();
+  var e = document.getElementById('aErrEmail');
+  if(v === '') { e.textContent = 'Email required'; return false; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { e.textContent = 'Invalid email'; return false; }
+  e.textContent=''; return true;
+}
+function checkAUid(){
+  var v = document.getElementById('aUid').value;
+  var e = document.getElementById('aErrUid');
+  if(v === '' || Number(v) <= 0) { e.textContent = 'Positive ID required'; return false; }
+  e.textContent=''; return true;
+}
+function checkF8(){ return checkAName() & checkAEmail() & checkAUid(); }
+
+</script>
+</body>
+</html>

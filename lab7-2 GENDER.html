@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form 3 - Gender Selection</title>
+</head>
+<body>
+<h3>3. Gender Selection</h3>
+
+<form onsubmit="return checkGender()">
+  <label><input type="radio" name="g" value="m">Male</label>
+  <label><input type="radio" name="g" value="f">Female</label>
+  <label><input type="radio" name="g" value="o">Others</label><br>
+  <span id="err" style="color:red"></span><br>
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+function checkGender(){
+  var g = document.querySelector('input[name="g"]:checked');
+  var e = document.getElementById('err');
+  if(!g){ e.textContent='Select one'; return false; }
+  e.textContent=''; return true;
+}
+</script>
+</body>
+</html>

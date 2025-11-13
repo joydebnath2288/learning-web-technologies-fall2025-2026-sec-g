@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Form 5 - Degree Selection</title>
+</head>
+<body>
+<h3>5. Degree Selection</h3>
+
+<form onsubmit="return checkDegree()">
+  <label><input type="checkbox" name="d" value="ssc">SSC</label>
+  <label><input type="checkbox" name="d" value="hsc">HSC</label>
+  <label><input type="checkbox" name="d" value="bsc">BSc</label><br>
+  
+  <span id="err" style="color:red"></span><br>
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+function checkDegree(){
+  var d = document.querySelectorAll('input[name="d"]:checked');
+  var e = document.getElementById('err');
+  if(d.length == 0){
+    e.textContent = 'Please select at least one degree';
+    return false;
+  }
+  e.textContent = '';
+  return true;
+}
+</script>
+</body>
+</html>

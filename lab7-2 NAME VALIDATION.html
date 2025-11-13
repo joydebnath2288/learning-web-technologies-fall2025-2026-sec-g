@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form 1 - Name Validation</title>
+</head>
+<body>
+<h3>1. Name Validation</h3>
+
+<form onsubmit="return checkName()">
+  Name: <input type="text" id="name" onblur="checkName()"><br>
+  <span id="err" style="color:red"></span><br>
+  <input type="submit" value="Submit">
+</form>
+
+<script>
+function checkName(){
+  var v = document.getElementById('name').value.trim();
+  var e = document.getElementById('err');
+  if(v == ''){ e.textContent='Name cannot be empty'; return false; }
+  if(!/^[A-Za-z]/.test(v)){ e.textContent='Must start with a letter'; return false; }
+  if(v.split(/\s+/).length < 2){ e.textContent='Enter at least two words'; return false; }
+  if(!/^[A-Za-z.\-\s]+$/.test(v)){ e.textContent='Only letters, dot, dash allowed'; return false; }
+  e.textContent=''; return true;
+}
+</script>
+</body>
+</html>
